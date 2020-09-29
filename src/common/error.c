@@ -1,5 +1,5 @@
-#include "include/common/types.h"
-#include "include/common/error.h"
+#include "types.h"
+#include "error.h"
 
 int is_error(Status const status)
 {

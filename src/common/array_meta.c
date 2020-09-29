@@ -1,6 +1,6 @@
-#include "include/common/types.h"
-#include "include/common/panic.h"
-#include "include/common/array_meta.h"
+#include "types.h"
+#include "panic.h"
+#include "array_meta.h"
 
 ArrayMeta new_array_meta(int const current, int const capacity)
 {

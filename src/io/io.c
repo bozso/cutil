@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#include "include/common/types.h"
-#include "include/common/error.h"
+#include "src/common/types.h"
+#include "src/common/error.h"
 
 /**
  * @file

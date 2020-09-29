@@ -1,7 +1,7 @@
-#include "include/common/types.h"
-#include "include/common/panic.h"
-#include "include/common/array_meta.h"
-#include "include/common/ids.h"
+#include "types.h"
+#include "panic.h"
+#include "array_meta.h"
+#include "ids.h"
 
 IDs cm_new_ids(void)
 {

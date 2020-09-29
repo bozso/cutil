@@ -1,6 +1,6 @@
-#include "include/common/types.h"
-#include "include/common/panic.h"
-#include "include/common/arguments.h"
+#include "types.h"
+#include "panic.h"
+#include "arguments.h"
 
 Arguments new_args(int const argc, const_str*const argv)
 {

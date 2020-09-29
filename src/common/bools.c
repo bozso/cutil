@@ -1,5 +1,5 @@
-#include "include/common/array_meta.h"
-#include "include/common/bools.h"
+#include "array_meta.h"
+#include "bools.h"
 
 Bools cm_new_bools(void)
 {

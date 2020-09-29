@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#include "include/common/types.h"
-#include "include/common/panic.h"
+#include "types.h"
+#include "panic.h"
 
 void panicf_impl(const_str file, int const line, const_str fmt, ...)
 {
