@@ -1,5 +1,5 @@
 c_library(
     name = "cutil",
-    srcs = glob(["src/*.c"]),
-    hdrs = glob(["include/*.h"]),
+    srcs = glob(["src/**.c"]),
+    hdrs = glob(["include/**.h"]),
 )
