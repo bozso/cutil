@@ -1,11 +1,4 @@
-typedef struct ErrorHandler {
-    void (*handle)(void*const self);
-} ErrorHandler;
-
-typedef struct IErrorHandler {
-    void* self;
-    ErrorHandler* handler;
-} IErrorHandler;
+#include "error_handling.h"
 
 static void ignore_impl(void*const self)
 {

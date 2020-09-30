@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#include "types.h"
 #include "panic.h"
 
 void panicf_impl(const_str file, int const line, const_str fmt, ...)
