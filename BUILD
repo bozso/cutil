@@ -3,3 +3,9 @@ c_library(
     srcs = glob(["cutil/**.c"]),
     hdrs = glob(["cutil/**.h"]),
 )
+
+cc_library(
+    name = "util",
+    srcs = glob(["util/**.cc"]),
+    hdrs = glob(["util/**.hh"]),
+)

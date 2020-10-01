@@ -24,9 +24,9 @@ typedef struct IndentWriterMethods {
 } IndentWriterMethods;
 
 typedef struct IndentWriter {
-    IWriter* writer;
+    IWriter*const writer;
     int const n_indent;
-    IndentWriterMethods* methods;
+    IndentWriterMethods*const methods;
 } IndentWriter;
 
 IndentWriter io_new_indent_writer(IWriter* wr, int const n_indent);

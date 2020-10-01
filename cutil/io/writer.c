@@ -15,19 +15,15 @@ IWriter io_new_writer(void*const self, io_write writer)
 Status io_vfprintf(IWriter const*const writer, char *buffer,
                    const_str fmt, va_list args)
 {
-    int const ret = vsprintf(buffer, fmt, args);
-    
-    if (ret < 0) {
+    if (vsprintf(buffer, fmt, args) < 0) {
         return StatusPrintError;
     }
     
-    Status status = StatusOk;
-    
     if (writer->write(writer->self, buffer) < 0) {
-        status = StatusFail;
+        return StatusFail;
     }
-
-    return status;
+    
+    return StatusOk;
 }
 
 Status io_fprintf(IWriter const*const writer, const_str fmt, ...)
@@ -42,7 +38,7 @@ Status io_fprintf(IWriter const*const writer, const_str fmt, ...)
         return StatusPrintError;
     }
     
-    char *buffer = malloc(size + 1);
+    char *const buffer = malloc(size + 1);
     
     if (buffer == NULL) {
         return StatusPrintError;
@@ -70,6 +66,7 @@ IndentWriter io_new_indent_writer(IWriter* wr, int const n_indent)
 {
     return (IndentWriter) {
         .writer = wr,
+        .n_indent = n_indent,
         .methods = &indent_writer_methods,
     };
 }
