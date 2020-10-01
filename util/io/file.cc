@@ -33,7 +33,7 @@ namespace io {
 File::File(std::FILE*const file)
 {
     if (file == NULL) {
-        
+        // error
     }
     
     m_file = File::ptr(file);

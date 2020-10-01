@@ -24,19 +24,8 @@ struct File {
     
     using ptr = std::unique_ptr<std::FILE, Deleter>;
     
-    File() = default;
-    File(File&) = default;
-    File(File const&) = default;
-    File(File&&) = default;
-
-    File& operator=(File&) = default;
-    File& operator=(File const&) = default;
-    File& operator=(File&&) = default;
-    
     static File open(common::const_str path, Mode const mode);
     
-    ~File() = default;
-
 private:
     ptr m_file;
     
@@ -44,6 +33,9 @@ private:
 };
 
 
+struct Binary : File {
+    
+};
 
 }
 }
