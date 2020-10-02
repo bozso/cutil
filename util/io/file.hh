@@ -8,6 +8,14 @@
 namespace util {
 namespace io {
 
+enum class Open {
+    Read, Write, ReadWrite, Append
+};
+
+enum class Input {
+    Binary, Text
+};
+
 struct File {
     struct Deleter {
       void operator()(std::FILE* file) { std::fclose(file); }
@@ -24,17 +32,26 @@ struct File {
     
     using ptr = std::unique_ptr<std::FILE, Deleter>;
     
-    static File open(common::const_str path, Mode const mode);
-    
+    static File open(common::const_str path, Open const open,
+                     Input const input);    
+
+    File() = default;
 private:
     ptr m_file;
     
     explicit File(std::FILE*const file);
 };
 
-
-struct Binary : File {
+struct Binary {
+    static Binary read(common::const_str path);
+    static Binary write(common::const_str path);
+    static Binary append(common::const_str path);
     
+    Binary() = default;
+private:
+    static Binary open(common::const_str path, Open const open);
+
+    File m_file;
 };
 
 }
