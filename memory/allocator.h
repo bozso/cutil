@@ -1,6 +1,7 @@
 #ifndef CUTIL_MEMORY_ALLOCATOR_H
 #define CUTIL_MEMORY_ALLOCATOR_H
 
+#include <stddef.h>
 #include "error/status.h"
 
 typedef void* (*allocate_fn)(void*const, size_t const);
@@ -8,7 +9,7 @@ typedef void* (*reallocate_fn)(void*const, void* ptr, size_t const);
 typedef void  (*deallocate_fn)(void*const, void*const);
 
 typedef struct Allocator {
-    void*const allocator; 
+    void* allocator; 
     allocate_fn allocate;
     reallocate_fn reallocate;
     deallocate_fn deallocate;
@@ -24,6 +25,5 @@ typedef struct AllocateErrorHandling {
 } AllocateErrorHandling;
 
 Allocator init_allocator_with_errors(AllocateErrorHandling*const self, Allocator*const allocator);
-
 
 #endif

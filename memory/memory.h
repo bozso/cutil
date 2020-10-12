@@ -1,14 +1,17 @@
 #ifndef CUTIL_MEMORY_MEMORY_H
 #define CUTIL_MEMORY_MEMORY_H
 
+#include "error/status.h"
 #include "allocator.h"
 
 typedef struct Memory {
-    void*const data;
-    Allocator*const allocator;
+    /// Pointer to allocated memory
+    void* data;
+    /// Pointer to allocator used for allocation and deallocation.
+    Allocator* allocator;
 } Memory;
 
-Memory memory_allocate(Allocator*const allocator, size_t const size);
-Memory memory_deallocate(Memory*const self);
+ErrorStatus memory_allocate(Memory*const self, Allocator*const allocator, size_t const size);
+void memory_deallocate(Memory*const self);
 
 #endif
