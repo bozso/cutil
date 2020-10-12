@@ -3,8 +3,7 @@
 
 #include <stdint.h>
 #include "error/status.h"
-
-typedef ErrorStatus (*cutil_drop)(void*const self);
+#include "memory/drop.h"
 
 typedef uint64_t (*reference_count_incref)(void*const self);
 typedef uint64_t (*reference_count_decref)(void*const self);
@@ -12,7 +11,7 @@ typedef uint64_t (*reference_count_decref)(void*const self);
 typedef struct ReferenceCounterMethods {
     reference_count_incref incref;
     reference_count_decref decref;
-    cutil_drop drop;
+    cutil_memory_drop drop;
 } ReferenceCounterMethods;
 
 typedef struct ReferenceCounter {
@@ -26,10 +25,5 @@ ReferenceCounter as_reference_counted(
 );
 
 ErrorStatus refcount_decref(ReferenceCounter*const self);
-
-typedef struct Dropper {
-    void*const self;
-    cutil_drop drop;
-} Dropper;
 
 #endif

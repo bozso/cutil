@@ -4,10 +4,10 @@
 #include <stdatomic.h>
 
 #include "interface.h"
+#include "memory/drop.h"
 
 typedef struct AtomicReferenceCounted {
-    void*const obj;
-    cutil_drop drop;
+    Dropper drop;
     atomic_uint_fast64_t ref_count;
 } AtomicReferenceCounted;
 

@@ -4,8 +4,7 @@
 #include "interface.h"
 
 typedef struct ReferenceCounted {
-    void*const obj;
-    cutil_drop drop;
+    Dropper drop;
     uint64_t ref_count;
 } ReferenceCounted;
 

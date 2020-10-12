@@ -15,12 +15,12 @@ uint64_t atomic_reference_counted_decref(AtomicReferenceCounted*const self)
 static ReferenceCounterMethods atomic_reference_counted_methods_private = {
     .incref = (reference_count_incref)atomic_reference_counted_incref,
     .decref = (reference_count_decref)atomic_reference_counted_decref,
-    .drop = (cutil_drop)atomic_reference_counted_drop,
+    .drop = (cutil_memory_drop)atomic_reference_counted_drop,
 };
 
 ErrorStatus atomic_reference_counted_drop(AtomicReferenceCounted*const self)
 {
-    return self->drop(self->obj);
+    return cutil_drop(&self->drop);
 }
 
 ReferenceCounterMethods const*const atomic_reference_counted_methods(void)

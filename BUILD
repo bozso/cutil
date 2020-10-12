@@ -11,17 +11,17 @@ c_library(
 )
 
 c_library(
-    name = "refcount",
-    srcs = glob(["refcount/**.c"]),
-    hdrs = glob(["refcount/**.h"]),
-    deps = [":error"],
-)
-
-c_library(
     name = "memory",
     srcs = glob(["memory/**.c"]),
     hdrs = glob(["memory/**.h"]),
     deps = [":error"],
+)
+
+c_library(
+    name = "refcount",
+    srcs = glob(["refcount/**.c"]),
+    hdrs = glob(["refcount/**.h"]),
+    deps = [":error", ":memory"],
 )
 
 cc_library(

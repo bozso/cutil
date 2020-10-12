@@ -16,3 +16,11 @@ void memory_deallocate(Memory*const self)
     deallocate(self->allocator, self->data);
 }
 
+static MemoryMethods const memory_methods_private = {
+    .drop = (cutil_memory_drop) memory_deallocate,
+};
+
+MemoryMethods const*const memory_methods(void)
+{
+    return &memory_methods_private;
+}
