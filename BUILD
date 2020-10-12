@@ -4,6 +4,26 @@ c_library(
     hdrs = glob(["cutil/**.h"]),
 )
 
+c_library(
+    name = "error",
+    srcs = glob(["error/**.c"]),
+    hdrs = glob(["error/**.h"]),
+)
+
+c_library(
+    name = "refcount",
+    srcs = glob(["refcount/**.c"]),
+    hdrs = glob(["refcount/**.h"]),
+    deps = [":error"],
+)
+
+c_library(
+    name = "memory",
+    srcs = glob(["memory/**.c"]),
+    hdrs = glob(["memory/**.h"]),
+    deps = [":error"],
+)
+
 cc_library(
     name = "util",
     srcs = glob(["util/**.cc"]),
