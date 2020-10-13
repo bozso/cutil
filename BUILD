@@ -1,10 +1,4 @@
 c_library(
-    name = "cutil",
-    srcs = glob(["cutil/**.c"]),
-    hdrs = glob(["cutil/**.h"]),
-)
-
-c_library(
     name = "error",
     srcs = glob(["error/**.c"]),
     hdrs = glob(["error/**.h"]),
