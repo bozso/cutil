@@ -2,8 +2,8 @@
 #define CUTIL_REFCOUNT_MEMORY_H
 
 #include <stdint.h>
-#include "error/status.h"
-#include "memory/drop.h"
+#include "cutil/error/status.h"
+#include "cutil/memory/drop.h"
 
 typedef uint64_t (*reference_count_incref)(void*const self);
 typedef uint64_t (*reference_count_decref)(void*const self);

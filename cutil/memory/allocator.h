@@ -2,7 +2,7 @@
 #define CUTIL_MEMORY_ALLOCATOR_H
 
 #include <stddef.h>
-#include "error/status.h"
+#include "cutil/error/status.h"
 
 typedef void* (*allocate_fn)(void*const, size_t const);
 typedef void* (*reallocate_fn)(void*const, void* ptr, size_t const);

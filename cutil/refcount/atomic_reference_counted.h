@@ -4,7 +4,7 @@
 #include <stdatomic.h>
 
 #include "interface.h"
-#include "memory/drop.h"
+#include "cutil/memory/drop.h"
 
 typedef struct AtomicReferenceCounted {
     Dropper drop;
