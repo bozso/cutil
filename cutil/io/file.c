@@ -1,53 +1,31 @@
-#include "file.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "writer.h"
 
-static int io_file_write(void*const self_, const_str msg)
-{
-    return fputs(msg, ((File*const) self_)->file);
+struct Writer_t {
+    FILE* file;
+};
+
+static int write(struct Writer_t*const wr, char const*const bytes) {
+    return fputs(bytes, wr->file);
 }
 
-File io_new_file(FILE* file)
-{
-    return (File) {
-        .file = file,
-        .write = io_file_write,
-    };
+static int drop(struct Writer_t*const wr) {
+    fclose(wr->file);
+    free(wr);
+    return 0;
 }
 
-typedef struct FileCache {
-    File files[IO_STD_MAX];
-    IWriter writers[IO_STD_MAX];
-    int is_set[IO_STD_MAX];
-} FileCache;
+static struct WriterMethods const methods = {
+    .write = write,
+    .drop = drop,
+};
 
-static FileCache file_cache = {0};
-
-static FILE* get(io_std mode)
+struct Writer* open_file(char const*const path, char const*const mode)
 {
-    FILE* file = NULL;
-    
-    switch (mode) {
-    case IO_STDOUT:
-        file = stdout;
-        break;
-    case IO_STDERR:
-        file = stderr;
-        break;
-    default:
-        break;
-    }
-    
-    return file;
-}
-
-IWriter* io_get(io_std mode)
-{
-    if (!file_cache.is_set[mode]) {
-        file_cache.files[mode] = io_new_file(get(mode));
-        
-        file_cache.writers[mode] =
-        io_new_writer(&file_cache.files[mode], &io_file_write);
-        file_cache.is_set[mode] = 1;
-    }
-    
-    return &file_cache.writers[mode];
+    struct Writer* wr = malloc(sizeof(struct Writer));
+    wr->self = malloc(sizeof(struct Writer_t));
+    wr->self->file = fopen(path, mode);
+    wr->methods = &methods;
+    return wr;
 }

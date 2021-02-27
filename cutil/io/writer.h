@@ -1,34 +1,16 @@
-#ifndef H_CUTIL_IO_WRITER
-#define H_CUTIL_IO_WRITER
+#ifndef WRITER_H 
+#define WRITER_H
 
-#include <stdarg.h>
+struct Writer_t;
 
-#include "cutil/common/types.h"
-#include "cutil/common/error.h"
+struct WriterMethods {
+    int (*write)(struct Writer_t*const, char const*const bytes);
+    int (*drop)(struct Writer_t*const);
+};
 
-typedef int (*io_write)(void*const self, const_str msg);
-
-typedef struct IWriter {
-    void* self;
-    io_write write;
-} IWriter;
-
-IWriter io_new_writer(void*const self, io_write writer);
-Status io_vfprintf(IWriter const*const writer, char *buffer,
-                   const_str fmt, va_list args);
-Status io_fprintf(IWriter const*const writer, const_str fmt, ...);
-
-
-typedef struct IndentWriterMethods {
-    io_write write;
-} IndentWriterMethods;
-
-typedef struct IndentWriter {
-    IWriter*const writer;
-    int const n_indent;
-    IndentWriterMethods*const methods;
-} IndentWriter;
-
-IndentWriter io_new_indent_writer(IWriter* wr, int const n_indent);
+struct Writer {
+    struct Writer_t* self;
+    struct WriterMethods const* methods;
+};
 
 #endif
