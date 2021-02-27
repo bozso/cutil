@@ -1,5 +1,7 @@
 #include "interface.h"
 
+#include <cstdio>
+
 ErrorStatus refcount_decref(ReferenceCounter*const self)
 {
     if (self->methods->decref(self) == 0) {

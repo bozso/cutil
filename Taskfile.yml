@@ -5,6 +5,9 @@ version: '2'
 tasks:
   build:
     cmds:
+      - please build --config=debug
+  release:
+    cmds:
       - please build
   test:
     cmds:
