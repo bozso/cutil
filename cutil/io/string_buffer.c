@@ -34,11 +34,11 @@ static struct WriterMethods const methods = {
     .drop = drop,
 };
 
-struct Writer*const new_string_buffer(void) {
-    struct Writer* const wr = malloc(sizeof(struct Writer));
-    wr->self = malloc(sizeof(struct Writer_t));
-    wr->self->buffer = NULL;
-    wr->methods = &methods;
+struct Writer new_string_buffer(void) {
+    struct Writer wr;
+    wr.self = malloc(sizeof(struct Writer_t));
+    wr.self->buffer = NULL;
+    wr.methods = &methods;
 
     return wr;
 }

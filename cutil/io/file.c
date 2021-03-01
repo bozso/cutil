@@ -11,9 +11,10 @@ static int write(struct Writer_t*const wr, char const*const bytes) {
 }
 
 static int drop(struct Writer_t*const wr) {
-    fclose(wr->file);
+    int status = 0;
+    status = fclose(wr->file);
     free(wr);
-    return 0;
+    return status;
 }
 
 static struct WriterMethods const methods = {
@@ -21,11 +22,11 @@ static struct WriterMethods const methods = {
     .drop = drop,
 };
 
-struct Writer* open_file(char const*const path, char const*const mode)
+struct Writer open_file(char const*const path, char const*const mode)
 {
-    struct Writer* wr = malloc(sizeof(struct Writer));
-    wr->self = malloc(sizeof(struct Writer_t));
-    wr->self->file = fopen(path, mode);
-    wr->methods = &methods;
+    struct Writer wr;
+    wr.self = malloc(sizeof(struct Writer_t));
+    wr.self->file = fopen(path, mode);
+    wr.methods = &methods;
     return wr;
 }

@@ -13,4 +13,9 @@ struct Writer {
     struct WriterMethods const* methods;
 };
 
+
+struct Writer open_file(char const*const path, char const*const mode);
+struct Writer new_string_buffer(void);
+char const*const get_buffer(struct Writer const*const self);
+
 #endif
