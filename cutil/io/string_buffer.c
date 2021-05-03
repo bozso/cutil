@@ -34,6 +34,7 @@ static struct WriterMethods const methods = {
     .drop = drop,
 };
 
+<<<<<<< HEAD
 struct Writer*const new_string_buffer(void) {
     struct Writer* const wr = malloc(sizeof(struct Writer));
     wr->self = malloc(sizeof(struct Writer_t));
@@ -45,4 +46,17 @@ struct Writer*const new_string_buffer(void) {
 
 char const*const get_buffer(struct Writer const*const self) {
     return self->self->buffer;
+=======
+struct Writer new_string_buffer(void) {
+    struct Writer self;
+    self.wr = malloc(sizeof(struct Writer_t));
+    self.wr->buffer = NULL;
+    self.methods = &methods;
+
+    return self;
+}
+
+char const*const get_buffer(struct Writer const*const self) {
+    return self->wr->buffer;
+>>>>>>> f0ff2e7
 }
