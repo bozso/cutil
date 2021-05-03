@@ -35,14 +35,14 @@ static struct WriterMethods const methods = {
 };
 
 struct Writer new_string_buffer(void) {
-    struct Writer wr;
-    wr.self = malloc(sizeof(struct Writer_t));
-    wr.self->buffer = NULL;
-    wr.methods = &methods;
+    struct Writer self;
+    self.wr = malloc(sizeof(struct Writer_t));
+    self.wr->buffer = NULL;
+    self.methods = &methods;
 
-    return wr;
+    return self;
 }
 
 char const*const get_buffer(struct Writer const*const self) {
-    return self->self->buffer;
+    return self->wr->buffer;
 }

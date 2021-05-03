@@ -9,12 +9,13 @@ struct WriterMethods {
 };
 
 struct Writer {
-    struct Writer_t* self;
+    struct Writer_t* wr;
     struct WriterMethods const* methods;
 };
 
-
-struct Writer open_file(char const*const path, char const*const mode);
+struct Writer open_file(char const*const path);
+struct Writer create_file(char const*const path);
+struct Writer append_file(char const*const path);
 struct Writer new_string_buffer(void);
 char const*const get_buffer(struct Writer const*const self);
 

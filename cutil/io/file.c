@@ -22,11 +22,19 @@ static struct WriterMethods const methods = {
     .drop = drop,
 };
 
-struct Writer open_file(char const*const path, char const*const mode)
-{
-    struct Writer wr;
-    wr.self = malloc(sizeof(struct Writer_t));
-    wr.self->file = fopen(path, mode);
-    wr.methods = &methods;
-    return wr;
+static struct Writer _open_file(char const*const path, char const*const mode) {
+    struct Writer self;
+    self.wr = malloc(sizeof(struct Writer_t));
+    self.wr->file = fopen(path, mode);
+    self.methods = &methods;
+    return self;
 }
+
+struct Writer create_file(char const*const path) {
+    return _open_file(path, "w");
+}
+
+struct Writer open_file(char const*const path) {
+    return _open_file(path, "r");
+}
+

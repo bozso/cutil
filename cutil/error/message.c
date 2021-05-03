@@ -16,7 +16,6 @@ void set_str_dup_fn(str_dup_fn fn) {
     str_dup = fn;
 }
 
-
 struct Error_t {
     char const* msg;
 };
