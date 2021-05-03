@@ -5,7 +5,7 @@
 #define CUTIL_ERROR_STATUS_FAIL -1000
 #endif
 
-typedef enum ErrorStatus {
+enum ErrorStatus {
     ErrorOk,
     ErrorFail = CUTIL_ERROR_STATUS_FAIL,
     ErrorPrint = CUTIL_ERROR_STATUS_FAIL - 1,
