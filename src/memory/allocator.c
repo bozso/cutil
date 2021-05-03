@@ -1,22 +1,22 @@
 #include "cutil/error/error.h"
 #include "allocator.h"
 
-void* allocate(Allocator*const self, size_t const size)
+void* allocate(struct Allocator*const self, size_t const size)
 {
     return self->allocate(self, size);
 }
 
-void* reallocate(Allocator*const self, void* ptr, size_t const size)
+void* reallocate(struct Allocator*const self, void* ptr, size_t const size)
 {
     return self->reallocate(self, ptr, size);
 }
 
-void deallocate(Allocator*const self, void*const ptr)
+void deallocate(struct Allocator*const self, void*const ptr)
 {
     return self->deallocate(self, ptr);
 }
 
-static void* allocate_error_handling(AllocateErrorHandling*const self,
+static void* allocate_error_handling(struct AllocateErrorHandling*const self,
                                      size_t const size)
 {
     if (is_error(self->status)) {
@@ -32,7 +32,7 @@ static void* allocate_error_handling(AllocateErrorHandling*const self,
     return ptr;
 }
 
-static void* reallocate_error_handling(AllocateErrorHandling*const self, void* ptr, size_t const size)
+static void* reallocate_error_handling(struct AllocateErrorHandling*const self, void* ptr, size_t const size)
 {
     if (is_error(self->status)) {
         return NULL;
