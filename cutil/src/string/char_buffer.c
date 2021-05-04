@@ -1,5 +1,5 @@
 #include "array/array.h"
-#include "string.h"
+#include "string/string.h"
 
 struct String_t {
   struct ArrayMeta meta;

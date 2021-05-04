@@ -2,7 +2,7 @@
 #define CUTIL_ERROR_ERROR_H
 
 #include "status.h"
-#include "string/string.h"
+#include "string/declare.h"
 
 int is_error(enum ErrorStatus const status);
 
