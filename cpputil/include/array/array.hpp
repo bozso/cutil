@@ -4,25 +4,29 @@
 #include <c++/7/bits/c++config.h>
 #include <cstdint>
 
+#include "memory/allocator.hpp"
+
 namespace cpputil {
-    namespace array {
-        using size = uint64_t;
+namespace array {
+using size = uint64_t;
 
-        class Meta {
-            size len, capacity;
-            std::size_t elem_size;
-        };
+class Meta {
+  size len, capacity;
+  std::size_t elem_size;
+};
 
-        class Config {
-            public:
-                template<class T>
-                Meta allocate(size cap);
+class Config {
+public:
+  template <class T> Meta allocate(size cap);
 
-                Meta allocate_impl(size cap, std::size_t elem_size);
+  Meta allocate_impl(size cap, std::size_t elem_size);
 
-                size default_capacity;
-        };
-    }
-}
+  size default_capacity;
+
+private:
+  Allocator allocator;
+};
+} // namespace array
+} // namespace cpputil
 
 #endif

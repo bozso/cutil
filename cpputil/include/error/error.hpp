@@ -4,13 +4,13 @@
 #include "string/string.hpp"
 
 namespace cpputil {
-    namespace error {
-        class Error {
-            public:
-                virtual String error() const = 0;
-                virtual ~Error() = default;
-        };
-    }
-}
+namespace error {
+class Error {
+public:
+  virtual String error() const = 0;
+  virtual ~Error() = default;
+};
+} // namespace error
+} // namespace cpputil
 
 #endif
