@@ -4,18 +4,26 @@
 #include "array/array.hpp"
 #include "error/error.hpp"
 
+#include <cstdint>
+
 namespace cpputil {
-class String {
+namespace string {
+
+using id = std::size_t;
+
+class Service {
   public:
-    virtual ~String() = default;
+    virtual Result<id> intern(char const* const str);
+    virtual ~Service() = default;
 };
 
-class CharacterBuffer : public String {
+class CharacterBuffer {
     CharacterBuffer(array::Config const&, array::size capacity);
 
   public:
     ~CharacterBuffer() = default;
 };
+} // namespace string
 } // namespace cpputil
 
 #endif

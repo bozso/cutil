@@ -14,7 +14,7 @@ set_warnings("all", "error")
 -- add build modes
 add_rules("mode.release", "mode.debug", "mode.profile", "mode.coverage")
 
-modules = {"error", "string", "array", "memory"}
+modules = {"error", "string", "io", "memory", "result"}
 
 c = {
     src="c",
@@ -37,17 +37,21 @@ end
 
 set_languages(lang)
 
-local name = conf.name
+function add_target(conf)
+    local name = conf.name
+    target(name)
+        for _, module in pairs(modules) do
+            tpl_src = fmt("src/%%s/*.%s", conf.src)
+            tpl_hdr = fmt("include/%%s/(*.%s)", conf.hdr)
+            add_files(fmt(tpl_src, module))
+            add_headerfiles(fmt(tpl_hdr, module))
+        end
+        set_kind("static")
+        add_includedirs("include", {public = true})
+end
 
-target(name)
-    for _, module in pairs(modules) do
-        tpl_src = fmt("src/%%s/*.%s", conf.src)
-        tpl_hdr = fmt("include/%%s/(*.%s)", conf.hdr)
-        add_files(fmt(tpl_src, module))
-        add_headerfiles(fmt(tpl_hdr, module))
-    end
-    set_kind("static")
-    add_includedirs("include", {public = true})
+add_target(c)
+add_target(cpp)
 
 -- include sub-projects
 -- includes("standalone", "test")

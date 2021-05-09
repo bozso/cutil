@@ -1,0 +1,4 @@
+#ifndef CPPUTIL_RESULT_RESULT_HPP
+#define CPPUTIL_RESULT_RESULT_HPP
+
+#endif
