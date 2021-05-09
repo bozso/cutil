@@ -1,5 +1,9 @@
 -- project
+includes("deps/flecs.lua")
+add_requires("flecs 2.3.*")
+
 set_project("Cutil")
+
 
 local lang = "c"
 
@@ -8,50 +12,29 @@ set_xmakever("2.3.2")
 
 set_version("0.0.1", {build = "%Y%m%d%H%M"})
 
-set_warnings("all", "error")
+set_warnings("everything", "more", "error")
 
 
 -- add build modes
 add_rules("mode.release", "mode.debug", "mode.profile", "mode.coverage")
 
-modules = {"error", "string", "io", "memory", "result"}
+modules = {"error", "string", "memory", "result"}
 
-c = {
-    src="c",
-    hdr="h",
-    name="cutil",
-}
-
-cpp = {
-    src="cpp",
-    hdr="hpp",
-    name="cpputil",
-}
-
-local conf = c
 local fmt = string.format
 
-if lang == "cpp" then
-    conf = cpp
-end
+set_languages("c99")
 
-set_languages(lang)
+target("cutil")
+    for _, module in pairs(modules) do
+        tpl_src = "src/%s/*.c"
+        tpl_hdr = "include/%s/(*.h)"
+        add_files(fmt(tpl_src, module))
+        add_headerfiles(fmt(tpl_hdr, module))
+    end
+    set_kind("static")
+    add_packages("flecs")
+    add_includedirs("include", {public = true})
 
-function add_target(conf)
-    local name = conf.name
-    target(name)
-        for _, module in pairs(modules) do
-            tpl_src = fmt("src/%%s/*.%s", conf.src)
-            tpl_hdr = fmt("include/%%s/(*.%s)", conf.hdr)
-            add_files(fmt(tpl_src, module))
-            add_headerfiles(fmt(tpl_hdr, module))
-        end
-        set_kind("static")
-        add_includedirs("include", {public = true})
-end
-
-add_target(c)
-add_target(cpp)
 
 -- include sub-projects
 -- includes("standalone", "test")
