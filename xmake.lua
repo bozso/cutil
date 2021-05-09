@@ -1,7 +1,7 @@
 -- project
 set_project("Cutil")
 
-local lang = "cpp"
+local lang = "c"
 
 -- set xmake minimum version
 set_xmakever("2.3.2")
@@ -41,13 +41,13 @@ local name = conf.name
 
 target(name)
     for _, module in pairs(modules) do
-        tpl_src = fmt("%s/src/%%s/*.%s", name, conf.src)
-        tpl_hdr = fmt("%s/include/%%s/(*.%s)", name, conf.hdr)
+        tpl_src = fmt("src/%%s/*.%s", conf.src)
+        tpl_hdr = fmt("include/%%s/(*.%s)", conf.hdr)
         add_files(fmt(tpl_src, module))
         add_headerfiles(fmt(tpl_hdr, module))
     end
     set_kind("static")
-    add_includedirs(fmt("%s/include", name), {public = true})
+    add_includedirs("include", {public = true})
 
 -- include sub-projects
 -- includes("standalone", "test")

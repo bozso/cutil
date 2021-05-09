@@ -9,10 +9,10 @@ Language: Cpp
 # Force pointers to the type for C++.
 DerivePointerAlignment: false
 PointerAlignment: Left
-ColumnLimit: 80
+ColumnLimit: 79
 ---
 Language: JavaScript
-ColumnLimit: 80
+ColumnLimit: 79
 ---
 Language: Proto
 DisableFormat: true
