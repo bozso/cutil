@@ -5,10 +5,10 @@
 
 namespace cpputil {
 namespace error {
-class Error {
-public:
-  virtual String error() const = 0;
-  virtual ~Error() = default;
+class Service {
+  public:
+    virtual result_id error(result_id) const = 0;
+    virtual ~Service() = default;
 };
 } // namespace error
 } // namespace cpputil

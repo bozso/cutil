@@ -3,17 +3,17 @@
 
 #include "array/array.hpp"
 #include "error/error.hpp"
+#include "result/result.h"
 
 #include <cstdint>
 
 namespace cpputil {
 namespace string {
 
-using id = std::size_t;
-
 class Service {
   public:
-    virtual Result<id> intern(char const* const str);
+    virtual Result intern(char const* const str);
+    virtual Result concatenate(result_id, result_id);
     virtual ~Service() = default;
 };
 
