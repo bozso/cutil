@@ -5,9 +5,7 @@
 #include "config.h"
 #include "meta.h"
 
-void array_allocate(
-        struct ArrayConfig const*const,
-        struct ArrayMeta*const,
-        void*buffer, Error*);
+void array_allocate(struct ArrayConfig const* const, struct ArrayMeta* const,
+                    void* buffer, struct ErrorService*);
 
 #endif

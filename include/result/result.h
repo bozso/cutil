@@ -7,8 +7,8 @@
 typedef uint64_t result_id;
 
 typedef enum Status {
-    Ok,
-    Error,
+    StatusOk,
+    StatusError,
 } Status;
 
 typedef struct Result {
@@ -23,5 +23,28 @@ bool is_error(Result const);
     if (is_error((res))) {                                                    \
         return (res);                                                         \
     }
+
+typedef enum OptionTag {
+    OptionSome,
+    OptionNone,
+} OptionTag;
+
+typedef struct Option {
+    OptionTag tag;
+    result_id id;
+} Option;
+
+typedef union PtrOrID {
+    void* ptr;
+    result_id id;
+} PtrOrID;
+
+typedef struct ResultPtr {
+    Status status;
+    PtrOrID ptr_or_id;
+} ResultPtr;
+
+Option option_some(result_id id);
+Option option_none(void);
 
 #endif
