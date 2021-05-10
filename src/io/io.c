@@ -4,13 +4,6 @@
 
 #include "io.h"
 
-/**
- * @file
- * @author István Bozsó <bozso.istvan@csfk.mta.hu>
- * @version 0.1
- *
- */
-
 #if 0
 
 typedef struct Stream {

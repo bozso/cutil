@@ -1,7 +1,13 @@
 #ifndef H_BOZSO_CUTIL
 #define H_BOZSO_CUTIL
 
-#include "common/common.h"
-#include "io/io.h"
+/**
+ * @file
+ * @author István Bozsó <bozso.istvan@epss.hu>
+ * @version 0.0.1
+ */
+
+#include "error/error.h"
+#include "result/result.h"
 
 #endif

@@ -3,9 +3,4 @@
 
 #include "config.h"
 
-struct ArrayMeta {
-    struct ArrayConfig*const alloc;
-    array_size len, cap;
-};
-
 #endif

@@ -16,8 +16,6 @@ typedef struct Result {
     result_id id;
 } Result;
 
-bool is_error(Result const);
-
 #define TRY(res, x)                                                           \
     do {                                                                      \
         Result(res) = (x);                                                    \
@@ -58,6 +56,22 @@ typedef struct Option {
     result_id id;
 } Option;
 
+typedef enum ErrorTag {
+    ErrorCode,
+    ErrorID,
+    ErrorNone,
+} ErrorTag;
+
+/**
+ * Opaque type that either contains an error code, an error ID or none of them.
+ */
+typedef struct Error Error;
+
+bool is_error(Error const);
+ErrorTag error_tag(Error const);
+Error error_from_option(Option const);
+Error error_from_result(Result const);
+
 Option option_some(result_id id);
 Option option_none(void);
 
@@ -75,13 +89,5 @@ ResultPtr error_ptr(result_id);
 ResultPtr ok_ptr(void*);
 
 Option to_option(ResultPtr ptr);
-
-typedef struct ErrorCode {
-    OptionTag tag;
-    int code;
-} ErrorCode;
-
-ErrorCode error_from_code(void);
-ErrorCode no_error(void);
 
 #endif
