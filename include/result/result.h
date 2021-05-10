@@ -4,17 +4,29 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "file_context.h"
+
 typedef uint64_t result_id;
 
-typedef enum Status {
-    StatusOk,
-    StatusError,
-} Status;
+typedef enum ErrorTag {
+    ErrorCode,
+    ErrorID,
+    ErrorNone,
+} ErrorTag;
 
-typedef struct Result {
-    Status status;
-    result_id id;
-} Result;
+typedef struct Result Result;
+typedef struct Error Error;
+
+bool is_error(Result const);
+ErrorTag error_tag(Result const);
+result_id result_unwrap_panic_impl(Result const, void*,
+                                   struct FileContext const);
+result_id result_unwrap_impl(Result const, struct FileContext const);
+Result result_error_code(void);
+
+#define result_unwrap_panic(res, panic)                                       \
+    result_unwrap_impl((res), (panic), FILE_CONTEXT)
+#define result_unwrap(res) result_unwrap_impl((res), FILE_CONTEXT)
 
 #define TRY(res, x)                                                           \
     do {                                                                      \
@@ -24,14 +36,14 @@ typedef struct Result {
         }                                                                     \
         while (0)
 
-#define err_check(err)                                                        \
+#define ERR_CHECK(err)                                                        \
     do {                                                                      \
         if (is_error((err))) {                                                \
             return (err);                                                     \
         }                                                                     \
     } while (0)
 
-#define option_check(opt)                                                     \
+#define OPTION_CHECK(opt)                                                     \
     do {                                                                      \
         if ((opt).tag == OptionSome) {                                        \
             return (opt);                                                     \
@@ -56,21 +68,9 @@ typedef struct Option {
     result_id id;
 } Option;
 
-typedef enum ErrorTag {
-    ErrorCode,
-    ErrorID,
-    ErrorNone,
-} ErrorTag;
-
 /**
  * Opaque type that either contains an error code, an error ID or none of them.
  */
-typedef struct Error Error;
-
-bool is_error(Error const);
-ErrorTag error_tag(Error const);
-Error error_from_option(Option const);
-Error error_from_result(Result const);
 
 Option option_some(result_id id);
 Option option_none(void);
