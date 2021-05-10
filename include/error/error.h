@@ -1,23 +1,22 @@
 #ifndef CUTIL_ERROR_ERROR_H
 #define CUTIL_ERROR_ERROR_H
 
+#include "result/result.h"
 #include "status.h"
-#include "string/string.h"
+#include "string/declare.h"
 
-int is_error(enum ErrorStatus const status);
+struct ErrorService_t;
+struct ErrorServiceMethods;
 
-struct Error_t;
-struct ErrorMethods;
+struct ErrorService {
+    struct ErrorService_t* self;
+    struct ErrorServiceMethods const* const methods;
+};
 
-typedef struct Error {
-    struct Error_t* self;
-    struct ErrorMethods const*const methods;
-} Error;
-
-struct ErrorMethods {
-    String (*error)(struct Error_t*const self);
-    Error* (*cause)(struct Error_t*const self);
-    Error (*destroy)(struct Error_t*const self);
+struct ErrorServiceMethods {
+    Result (*error)(struct ErrorService_t* const, result_id);
+    Option (*cause)(struct ErrorService_t* const, result_id);
+    Result (*destroy)(struct ErrorService_t* const self, result_id);
 };
 
 #endif

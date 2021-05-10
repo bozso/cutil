@@ -1,6 +1,6 @@
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 
 #include "io.h"
 
@@ -8,7 +8,7 @@
  * @file
  * @author István Bozsó <bozso.istvan@csfk.mta.hu>
  * @version 0.1
- * 
+ *
  */
 
 #if 0

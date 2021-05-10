@@ -1,23 +1,25 @@
 #ifndef CUTIL_MEMORY_DROP_H
 #define CUTIL_MEMORY_DROP_H
 
-#include "cutil/error/status.h"
+#include "error/error.h"
 
-typedef ErrorStatus (*cutil_memory_drop)(void*const self);
+struct Drop_t;
 
-typedef struct Dropper {
-    void*const obj;
-    cutil_memory_drop drop;
-} Dropper;
+struct DropMethods {
+    Error (*drop)(struct Drop_t* const);
+};
 
-ErrorStatus cutil_drop(Dropper*const self);
+struct Drop {
+    struct Drop_t* const drop;
+    struct DropMethods methods;
+};
 
 #if !defined(CUTIL_MEMORY_DROP_STACK_SIZE)
 #define CUTIL_MEMORY_DROP_STACK_SIZE 100
 #endif
 
 typedef struct DropStack {
-    Dropper droppers[CUTIL_MEMORY_DROP_STACK_SIZE];
+    struct Drop droppers[CUTIL_MEMORY_DROP_STACK_SIZE];
 } DropStack;
 
 #endif

@@ -1,6 +1,7 @@
 # Please output directory and local configuration
-plz-out
-.plzconfig.local
+# build configuration and files
+.xmake
+compile_commands.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
