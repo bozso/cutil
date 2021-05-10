@@ -1,5 +1,4 @@
 #include "error/error.h"
-#include "flecs.h"
 #include "memory/allocator.h"
 
 struct ErrorService_t {
