@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 
+#include "memory/drop.h"
 #include "result/result.h"
 
 struct Allocator_t;
@@ -11,6 +12,7 @@ struct AllocatorMethods {
     void* (*allocate)(struct Allocator_t* const, size_t const);
     void* (*reallocate)(struct Allocator_t* const, void* ptr, size_t const);
     void (*deallocate)(struct Allocator_t* const, void* const);
+    drop_fn drop;
 };
 
 typedef struct Allocator {
@@ -22,9 +24,13 @@ void* allocate_impl(Allocator* const, size_t const);
 void* reallocate_impl(Allocator* const, void*, size_t const);
 void deallocate(Allocator* const self, void* const ptr);
 
+Error allocate_err(Allocator* const, void**, size_t const);
+
 #define allocate(alloc, TYPE, size)                                           \
     allocate_impl((alloc), sizeof(TYPE) * (size))
 
 Allocator init_allocator_with_errors(struct Allocator* const allocator);
+
+Allocator mallocator(void);
 
 #endif

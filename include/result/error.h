@@ -28,4 +28,11 @@ Error error_from_id(result_id const);
 Error error_ok(void);
 Error error_from_option(Option const);
 
+#define error_check(err)                                                      \
+    do {                                                                      \
+        if (is_error((err))) {                                                \
+            return err;                                                       \
+        }                                                                     \
+    } while (0)
+
 #endif

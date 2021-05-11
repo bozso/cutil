@@ -1,22 +1,29 @@
 #include <stdlib.h>
 
+#include "error/error.h"
 #include "memory/allocator.h"
 #include "result/result.h"
 
-static ResultPtr mallocate(struct Allocator_t* const self, size_t const size,
-                           struct ErrorService* const err) {
+static void* mallocate(struct Allocator_t* const self, size_t const size) {
     (void)self;
-    void* const ptr = malloc(size);
+    return malloc(size);
+}
 
-    if (ptr == NULL) {
-        error_ptr(0);
-    }
+static void* mreallocate(struct Allocator_t* const self, void* ptr,
+                         size_t const size) {
+    (void)self;
+    return realloc(ptr, size);
+}
 
-    return ok_ptr(ptr);
+static void mdeallocate(struct Allocator_t* const self, void* const ptr) {
+    (void)self;
+    free(ptr);
 }
 
 static struct AllocatorMethods const methods = {
     .allocate = mallocate,
+    .reallocate = mreallocate,
+    .deallocate = mdeallocate,
 };
 
 Allocator mallocator(void) {

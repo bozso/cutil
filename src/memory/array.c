@@ -1,4 +1,6 @@
 #include "memory/array.h"
+#include "memory/allocator.h"
+#include "result/error.h"
 #include "result/option.h"
 
 struct ArrayConfig new_array_config(struct Allocator* const alloc,
@@ -9,15 +11,17 @@ struct ArrayConfig new_array_config(struct Allocator* const alloc,
     };
 }
 
-Option array_init(struct Array* const arr, struct ArrayConfig* const conf,
-                  struct ErrorService* const err) {
-    return option_none();
-}
+Error array_init_impl(struct Array* const arr, struct ArrayConfig* const conf,
+                      size_t const type_size, size_t const cap) {
 
-Option array_allocate(struct ArrayConfig const* const conf,
-                      struct ArrayMeta* const meta, void* buffer,
-                      struct ErrorService* const err) {
-    return option_none();
+    Error err = allocate_err(conf->allocator, &arr->buffer, type_size * cap);
+    error_check(err);
+
+    arr->type_size = type_size;
+    arr->config = conf;
+    arr->len = arr->cap = cap;
+
+    return error_ok();
 }
 
 #if 0
