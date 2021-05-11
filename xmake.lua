@@ -4,7 +4,6 @@ add_requires("flecs 2.3.*")
 
 set_project("Cutil")
 
-
 local lang = "c"
 
 -- set xmake minimum version

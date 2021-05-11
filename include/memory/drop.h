@@ -3,23 +3,15 @@
 
 #include "error/error.h"
 
-struct Drop_t;
-
-struct DropMethods {
-    Error (*drop)(struct Drop_t* const);
-};
-
-struct Drop {
-    struct Drop_t* const drop;
-    struct DropMethods methods;
-};
+typedef Error (*drop_fn)(void* const);
 
 #if !defined(CUTIL_MEMORY_DROP_STACK_SIZE)
 #define CUTIL_MEMORY_DROP_STACK_SIZE 100
 #endif
 
-typedef struct DropStack {
-    struct Drop droppers[CUTIL_MEMORY_DROP_STACK_SIZE];
-} DropStack;
+struct DropStack {
+    void* ptrs[CUTIL_MEMORY_DROP_STACK_SIZE];
+    drop_fn droppers[CUTIL_MEMORY_DROP_STACK_SIZE];
+};
 
 #endif

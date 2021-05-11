@@ -3,7 +3,6 @@
 
 #include <stddef.h>
 
-#include "error/error.h"
 #include "result/result.h"
 
 struct Allocator_t;

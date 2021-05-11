@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "error/error.h"
+#include "result/error.h"
 
 typedef uint64_t array_size;
 
@@ -22,10 +23,10 @@ struct Array {
     void* buffer;
 };
 
-Option array_init(struct Array* const, struct ArrayConfig* const,
-                  struct ErrorService* const);
+Error array_init(struct Array* const, struct ArrayConfig* const,
+                 struct ErrorService* const);
 
-Option array_allocate(struct ArrayConfig const* const, struct ArrayMeta* const,
-                      void*, struct ErrorService* const);
+Error array_allocate(struct ArrayConfig const* const, struct ArrayMeta* const,
+                     void*, struct ErrorService* const);
 
 #endif
