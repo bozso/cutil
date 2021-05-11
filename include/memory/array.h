@@ -1,31 +1,32 @@
-#ifndef CUTIL_MEMORY_ARRAY_H
-#define CUTIL_MEMORY_ARRAY_H
+#ifndef CUTIL_ARRAY_ARRAY_H
+#define CUTIL_ARRAY_ARRAY_H
 
 #include <stdint.h>
-#include "allocator.h"
-#include "drop.h"
 
-typedef size_t byte;
+#include "error/error.h"
+#include "result/error.h"
 
-typedef struct ArrayMeta {
-    Allocator* allocator;
-    byte element_size;
-} ArrayMeta;
+typedef uint64_t array_size;
 
-typedef struct Array {
-    ArrayMeta const* meta;
-    void* data;
-    uint64_t length;
-    uint64_t capacity;
-} Array;
+struct ArrayConfig {
+    struct Allocator* allocator;
+    array_size default_cap;
+};
 
-ErrorStatus array_with_capacity(Array*const self ,ArrayMeta const*const meta, uint64_t capacity);
-ErrorStatus array_resize(Array*const self, uint64_t nelem);
+struct ArrayMeta {
+    struct ArrayConfig* const alloc;
+    array_size len, cap;
+};
 
-typedef struct ArrayMetaMethods {
-    cutil_memory_drop drop;
-} ArrayMetaMethods;
+struct Array {
+    struct ArrayMeta meta;
+    void* buffer;
+};
 
-ArrayMetaMethods const*const array_meta_methods(void);
+Error array_init(struct Array* const, struct ArrayConfig* const,
+                 struct ErrorService* const);
+
+Error array_allocate(struct ArrayConfig const* const, struct ArrayMeta* const,
+                     void*, struct ErrorService* const);
 
 #endif

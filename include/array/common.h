@@ -1,4 +1,0 @@
-#ifndef CUTIL_ARRAY_COMMON_H
-#define CUTIL_ARRAY_COMMON_H
-
-#endif

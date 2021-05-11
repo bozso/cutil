@@ -1,4 +1,4 @@
-#include "array/array.h"
+#include "memory/array.h"
 #include "result/option.h"
 
 struct ArrayConfig new_array_config(struct Allocator* const alloc,
