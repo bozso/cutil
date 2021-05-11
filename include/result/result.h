@@ -9,7 +9,16 @@
 #include "result/id.h"
 #include "result/option.h"
 
-typedef struct Result Result;
+union ResultUnion {
+    union ErrorUnion error;
+    result_id id;
+};
+
+typedef struct Result {
+    ErrorTag tag;
+    union ResultUnion data;
+} Result;
+
 bool result_is_error(Result const);
 ErrorTag result_error_tag(Result const);
 
@@ -59,21 +68,19 @@ result_id result_unwrap_impl(Result const, struct FileContext const);
  * Opaque type that either contains an error code, an error ID or none of them.
  */
 
-#if 0
-typedef union PtrOrID {
+union PtrOrID {
     void* ptr;
     result_id id;
 } PtrOrID;
 
 typedef struct ResultPtr {
-    Status status;
-    PtrOrID ptr_or_id;
+    ErrorTag tag;
+    union PtrOrID ptr_or_id;
 } ResultPtr;
 
 ResultPtr error_ptr(result_id);
 ResultPtr ok_ptr(void*);
 
 Option to_option(ResultPtr ptr);
-#endif
 
 #endif
