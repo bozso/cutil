@@ -35,11 +35,15 @@ end
 -- add build modes
 add_rules("mode.release", "mode.debug", "mode.profile", "mode.coverage")
 
-modules = {"error", "string", "memory", "result", "test"}
+modules = {"error", "string", "memory", "result", "test", "common"}
 
 local fmt = string.format
 
 set_languages("c99")
+
+option("openmp")
+    add_cflags("-fopenmp")
+    add_defines("CUTIL_OPENMP")
 
 target("cutil")
     for _, module in pairs(modules) do
