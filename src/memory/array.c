@@ -2,6 +2,7 @@
 #include "memory/allocator.h"
 #include "result/error.h"
 #include "result/option.h"
+#include "result/result.h"
 
 struct ArrayConfig new_array_config(struct Allocator* const alloc,
                                     array_size default_cap) {
@@ -14,12 +15,13 @@ struct ArrayConfig new_array_config(struct Allocator* const alloc,
 Error array_init_impl(struct Array* const arr, struct ArrayConfig* const conf,
                       size_t const type_size, size_t const cap) {
 
-    Error err = allocate_err(conf->allocator, &arr->buffer, type_size * cap);
-    error_check(err);
+    ResultPtr ptr = allocate_err(conf->allocator, type_size * cap);
+    result_ptr_err(ptr);
 
     arr->type_size = type_size;
     arr->config = conf;
     arr->len = arr->cap = cap;
+    arr->buffer = ptr.ptr_or_err.ptr;
 
     return error_ok();
 }

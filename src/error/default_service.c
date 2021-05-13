@@ -17,7 +17,7 @@ struct ErrorService_t {
 Error create_error_service(struct ErrorServiceConfig const conf,
                            struct ErrorService* const err) {
     struct ErrorService_t* const ptr =
-        allocate(conf.allocator, struct ErrorService_t, 1);
+        m_allocate(conf.allocator, struct ErrorService_t, 1);
 
     if (ptr == NULL) {
         return error_code();

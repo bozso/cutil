@@ -22,7 +22,9 @@ typedef struct Error {
 } Error;
 
 bool is_error(Error const);
+bool error_is_code(int const);
 ErrorTag error_tag(Error const);
+
 Error error_code(void);
 Error error_from_id(result_id const);
 Error error_ok(void);

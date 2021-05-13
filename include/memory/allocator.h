@@ -24,9 +24,9 @@ void* allocate_impl(Allocator* const, size_t const);
 void* reallocate_impl(Allocator* const, void*, size_t const);
 void deallocate(Allocator* const self, void* const ptr);
 
-Error allocate_err(Allocator* const, void**, size_t const);
+ResultPtr allocate_err(Allocator* const, size_t const);
 
-#define allocate(alloc, TYPE, size)                                           \
+#define m_allocate(alloc, TYPE, size)                                         \
     allocate_impl((alloc), sizeof(TYPE) * (size))
 
 Allocator init_allocator_with_errors(struct Allocator* const allocator);

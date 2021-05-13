@@ -50,18 +50,29 @@ result_id result_unwrap_impl(struct Result const res,
     return result_unwrap_panic_impl(res, default_panic_fn, ctx);
 }
 
-ResultPtr error_ptr(result_id id) {
-    ResultPtr r;
-    r.tag = ErrorID;
-    r.ptr_or_id.id = id;
+ResultPtr ptr_error_code(void) {
+    Error err = error_code();
+    return ptr_error(err);
+}
 
+Error ptr_to_error(ResultPtr const r) {
+    Error e;
+    e.tag = r.tag;
+    e.data = r.ptr_or_err.error;
+    return e;
+}
+
+ResultPtr ptr_error(Error const err) {
+    ResultPtr r;
+    r.tag = err.tag;
+    r.ptr_or_err.error = err.data;
     return r;
 }
 
-ResultPtr ok_ptr(void* ptr) {
+ResultPtr ptr_ok(void* ptr) {
     ResultPtr r;
-    r.tag = ErrorID;
-    r.ptr_or_id.ptr = ptr;
+    r.tag = ErrorNone;
+    r.ptr_or_err.ptr = ptr;
 
     return r;
 }

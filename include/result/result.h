@@ -42,25 +42,17 @@ result_id result_unwrap_impl(Result const, struct FileContext const);
         }                                                                     \
         while (0)
 
-#define ERR_CHECK(err)                                                        \
-    do {                                                                      \
-        if (is_error((err))) {                                                \
-            return (err);                                                     \
-        }                                                                     \
-    } while (0)
-
-#define OPTION_CHECK(opt)                                                     \
-    do {                                                                      \
-        if ((opt).tag == OptionSome) {                                        \
-            return (opt);                                                     \
-        }                                                                     \
-    } while (0)
-
 #define result_ptr_check(res)                                                 \
     do {                                                                      \
-        if ((res).status == StatusError) {                                    \
-            Option opt = to_option((res));                                    \
-            return opt;                                                       \
+        if ((res).tag != ErrorNone) {                                         \
+            return res;                                                       \
+        }                                                                     \
+    } while (0)
+
+#define result_ptr_err(res)                                                   \
+    do {                                                                      \
+        if ((res).tag != ErrorNone) {                                         \
+            return ptr_to_error(res);                                         \
         }                                                                     \
     } while (0)
 
@@ -68,18 +60,20 @@ result_id result_unwrap_impl(Result const, struct FileContext const);
  * Opaque type that either contains an error code, an error ID or none of them.
  */
 
-union PtrOrID {
+union PtrOrError {
+    union ErrorUnion error;
     void* ptr;
-    result_id id;
 } PtrOrID;
 
 typedef struct ResultPtr {
     ErrorTag tag;
-    union PtrOrID ptr_or_id;
+    union PtrOrError ptr_or_err;
 } ResultPtr;
 
-ResultPtr error_ptr(result_id);
-ResultPtr ok_ptr(void*);
+Error ptr_to_error(ResultPtr const);
+ResultPtr ptr_error(Error const);
+ResultPtr ptr_error_code(void);
+ResultPtr ptr_ok(void*);
 
 Option to_option(ResultPtr ptr);
 
