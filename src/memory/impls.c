@@ -14,3 +14,7 @@ ResultPtr allocate_err(Allocator* const alloc, size_t const size) {
 
     return ptr_ok(ptr);
 }
+
+void deallocate(Allocator* const alloc, void* ptr) {
+    alloc->methods->deallocate(alloc->self, ptr);
+}

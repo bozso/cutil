@@ -1,3 +1,7 @@
 #include "cutil.h"
+#include "tests.h"
 
-int main(void) { return 0; }
+int main(void) {
+    test_allocator();
+    return 0;
+}

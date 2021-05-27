@@ -8,6 +8,8 @@
 
 #include "common/panic.h"
 
+static void default_exit(int const code) { exit(code); }
+
 static void default_panicf_impl(struct FileContext const fc,
                                 char const* const fmt, va_list args) {
     /// TODO: check ret?
@@ -15,10 +17,16 @@ static void default_panicf_impl(struct FileContext const fc,
 
     fprintf(stderr, " ");
     vfprintf(stderr, fmt, args);
-    exit(1);
 }
 
-static panic_fn fn_impl = default_panicf_impl;
+static void default_panicfln_impl(struct FileContext const fc,
+                                  char const* const fmt, va_list args) {
+    default_panicf_impl(fc, fmt, args);
+    fputs("\n", stderr);
+    default_exit(1);
+}
+
+static panic_fn fn_impl = default_panicfln_impl;
 
 void set_panicf_handler(panic_fn fn) {
 #ifdef CUTIL_OPENMP
