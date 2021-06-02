@@ -8,10 +8,18 @@
 
 struct Allocator_t;
 
+typedef void* (*error_allocate_fn)(struct Allocator_t* const, size_t const,
+                                   Error*);
+
+typedef void* (*error_reallocate_fn)(struct Allocator_t* const, void*,
+                                     size_t const, Error*);
+
 struct AllocatorMethods {
     void* (*allocate)(struct Allocator_t* const, size_t const);
     void* (*reallocate)(struct Allocator_t* const, void* ptr, size_t const);
     void (*deallocate)(struct Allocator_t* const, void* const);
+    error_allocate_fn error_allocate;
+    error_reallocate_fn error_reallocate;
     drop_fn drop;
 };
 
@@ -24,7 +32,7 @@ void* allocate_impl(Allocator* const, size_t const);
 void* reallocate_impl(Allocator* const, void*, size_t const);
 void deallocate(Allocator* const self, void* const ptr);
 
-ResultPtr allocate_err(Allocator* const, size_t const);
+void* allocate_err(Allocator* const, size_t const, Error*);
 
 #define m_allocate(alloc, TYPE, size)                                         \
     allocate_impl((alloc), sizeof(TYPE) * (size))

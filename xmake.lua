@@ -35,7 +35,7 @@ end
 -- add build modes
 add_rules("mode.release", "mode.debug", "mode.profile", "mode.coverage")
 
-modules = {"error", "string", "memory", "result", "test", "common"}
+modules = {"error", "string", "memory", "result", "common"}
 
 local fmt = string.format
 

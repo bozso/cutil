@@ -7,17 +7,19 @@ enum { kb = 1024, mb = kb * 1024, gb = 1024 * mb };
 void test_allocator(void) {
     Allocator alloc = mallocator();
 
-    ResultPtr ptr = allocate_err(&alloc, sizeof(char) * 100);
-    if (ptr.tag != ErrorNone) {
+    Error err = error_ok();
+    void* ptr = allocate_err(&alloc, sizeof(char) * 100, &err);
+    error_do_check(err, {
         panicf("expected succesful allocation, got error code: %d",
-               ptr.ptr_or_err.error.code);
-    }
+               error_get_code(err));
+    });
 
-    deallocate(&alloc, ptr.ptr_or_err.ptr);
+    deallocate(&alloc, ptr);
 
-    ptr = allocate_err(&alloc, sizeof(char) * gb * 1);
-    if (ptr.tag == ErrorNone) {
+    ptr = allocate_err(&alloc, sizeof(char) * gb * 1, &err);
+
+    if (!is_error(err)) {
         panicf("expected to exceed memory limits");
-        deallocate(&alloc, ptr.ptr_or_err.ptr);
+        deallocate(&alloc, ptr);
     }
 }

@@ -15,15 +15,16 @@ struct ArrayConfig new_array_config(struct Allocator* const alloc,
 Error array_init_impl(struct Array* const arr, struct ArrayConfig* const conf,
                       size_t const type_size, size_t const cap) {
 
-    ResultPtr ptr = allocate_err(conf->allocator, type_size * cap);
-    result_ptr_err(ptr);
+    Error err = error_ok();
+    void* ptr = allocate_err(conf->allocator, type_size * cap, &err);
+    error_check_ret(err);
 
     arr->type_size = type_size;
     arr->config = conf;
     arr->len = arr->cap = cap;
-    arr->buffer = ptr.ptr_or_err.ptr;
+    arr->buffer = ptr;
 
-    return error_ok();
+    return err;
 }
 
 #if 0

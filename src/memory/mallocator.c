@@ -24,6 +24,8 @@ static struct AllocatorMethods const methods = {
     .allocate = mallocate,
     .reallocate = mreallocate,
     .deallocate = mdeallocate,
+    .error_allocate = NULL,
+    .error_reallocate = NULL,
 };
 
 Allocator mallocator(void) {

@@ -15,6 +15,15 @@ Error error_code(void) {
     return e;
 }
 
+int error_get_code(Error const err) {
+    int ret = 0;
+
+    if (err.tag == ErrorCode) {
+        ret = err.data.code;
+    }
+    return ret;
+}
+
 Error error_from_id(result_id const id) {
     Error e;
     e.tag = ErrorID;
